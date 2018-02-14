@@ -25,7 +25,7 @@ class AskAgeAndGender extends Conversation
      */
     public function askAge()
     {
-        $this->ask('Please enter your age in years eg 24', function(Answer $answer) {
+        $this->ask('Please enter your age eg 24', function(Answer $answer) {
             // Save result
             $this->age =  $answer->getText();
             $this->askGender();
@@ -66,12 +66,12 @@ class AskAgeAndGender extends Conversation
 
     public function displayMainMenu(){
 
-        $this->ask('Reply with 1 to get more information on HIV Self Testing.\nReply with 2 for instructions to use a Self Test Kit.\nReply with 3 for locations to buy a Self Kit\nReply with 4 to talk to a Counselor', function(Answer $answer) {
+        $this->ask('Reply with 1 to get more information on HIV Self Testing.\\nReply with 2 for instructions to use a Self Test Kit.\\nReply with 3 for locations to buy a Self Kit\\nReply with 4 to talk to a Counselor', function(Answer $answer) {
             // Save result
             $menu =  $answer->getText();
             //$this->askGender();
             if ($menu == 1){
-
+                $this->bot->startConversation(new ShowFaqs($this->bot));
             }elseif($menu == 2){
 
             }elseif($menu == 3){

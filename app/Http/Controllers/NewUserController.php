@@ -20,8 +20,8 @@ class NewUserController extends Controller
             //return false;
         }else{
             $this->saveNewUser($user);
-            $bot->reply('Hello, Welcome to the HIV self testing assistant.\nHere, you will find test guides, 
-            ask questions, get answers, and speak to a health specialist if need arises.\nLets proceed.');
+            $bot->reply('Hello, Welcome to the HIV self testing assistant.\\nHere, you will find test guides, 
+            ask questions, get answers, and speak to a health specialist if need arises.\\nLets proceed.');
             $bot->startConversation(new AskAgeAndGender($bot));
             //return true;
         }
