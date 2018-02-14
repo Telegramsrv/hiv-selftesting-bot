@@ -60,7 +60,7 @@ return [
             ],
             [
                 'locale' => 'en_US',
-                'text' => 'Timeless apparel for the masses.',
+                'text' => 'HIV Self testing.',
             ],
         ],
     ],

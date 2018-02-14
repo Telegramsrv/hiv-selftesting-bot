@@ -12,7 +12,7 @@ return [
     | the cache.
     |
     */
-    'conversation_cache_time' => 30,
+    'conversation_cache_time' => 10,
 
     /*
     |--------------------------------------------------------------------------
@@ -24,5 +24,5 @@ return [
     | data will remain stored in the cache.
     |
     */
-    'user_cache_time' => 30,
+    'user_cache_time' => 10,
 ];
