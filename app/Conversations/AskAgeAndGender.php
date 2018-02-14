@@ -92,6 +92,7 @@ class AskAgeAndGender extends Conversation
                 $this->say('Please select one of the options.');
             }
         });*/
+        $this->bot->typesAndWaits(2);
         $this->bot->reply(ListTemplate::create()
             ->useCompactView()
             ->addElement(
