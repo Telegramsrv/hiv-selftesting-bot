@@ -1,0 +1,64 @@
+<?php
+use App\Http\Controllers\BotManController;
+use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+
+$botman = resolve('botman');
+
+$botman->hears('.*(GET_STARTED|start).*', function ($bot) {
+    $bot->reply('Welcome');
+});
+$botman->hears('Hi', function ($bot) {
+    $bot->reply('Hello!');
+});
+$botman->hears('Call me {name}', function ($bot,$name) {
+    $bot->reply('Your name is: '.$name);
+});
+$botman->hears('I want ([0-9]+)', function ($bot, $number) {
+    $bot->reply('You will get: '.$number);
+});
+$botman->hears('.*(Hi|Hello|Hey).*', function ($bot) {
+    $bot->typesAndWaits(2);
+    $bot->reply('Nice to meet you!');
+});
+
+// Calling the sendSticker API for Telegram
+$botman->hears('sticker', function($bot) {
+    $bot->sendRequest('sendSticker', [
+        'sticker' => '1234'
+    ]);
+});
+
+$botman->hears('Start conversation', BotManController::class.'@startConversation');
+
+$botman->receivesImages(function($bot, $images) {
+
+    foreach ($images as $image) {
+
+        $url = $image->getUrl(); // The direct url
+        $title = $image->getTitle(); // The title, if available
+        $payload = $image->getPayload(); // The original payload
+    }
+    // Create attachment
+    $attachment = new Image($url);
+
+    // Build message object
+    $message = OutgoingMessage::create('This is my image text')
+        ->withAttachment($attachment);
+
+    // Reply message object
+    $bot->reply($message);
+});
+
+$botman->fallback(function($bot) {
+    $bot->reply('Sorry, I did not understand what you mean here! ...');
+});
+
+
+$botman->hears('user', function ($bot) {
+    // Access user
+    $user = $bot->getUser();
+    // Access Information
+    $info = $user->getInfo();
+    $bot->reply($user->getFirstName());
+});
