@@ -4,6 +4,7 @@ namespace App\Conversations;
 
 use App\Faq;
 use BotMan\BotMan\BotMan;
+use BotMan\BotMan\Messages\Attachments\Image;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -37,7 +38,16 @@ class ShowFaqs extends Conversation
     public function showFaqDetails($this_faq){
         $faq = Faq::find($this_faq);
         if ($faq != null){
-            $this->say($faq->body);
+            if ($faq->image != null){
+                $attachment = new Image($faq->image);
+                $message = OutgoingMessage::create($faq->body)
+                    ->withAttachment($attachment);
+                $this->say($faq->title);
+                $this->bot->reply($message);
+            }else{
+                $this->say($faq->title);
+                $this->say($faq->body);
+            }
         }else{
             $this->ask('Please enter a correct number', function(Answer $answer) {
                 // Save result
