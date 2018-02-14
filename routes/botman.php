@@ -1,4 +1,6 @@
 <?php
+
+use App\Conversations\ShowFaqs;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
@@ -10,7 +12,13 @@ $botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 
 
-
+//main menu payload
+$botman->hears('faqs_1',function ($bot){
+    $bot->startConversation(new ShowFaqs($this->bot));
+});
+/*$botman->hears('instructions_2',);
+$botman->hears('locations_3',);
+$botman->hears('counselors_4',);*/
 
 
 $botman->hears('Hi', function ($bot) {
@@ -56,7 +64,7 @@ $botman->receivesImages(function($bot, $images) {
 });
 
 $botman->fallback(function($bot) {
-    $bot->reply('Sorry, I did not understand what you mean here! ...');
+    $bot->reply('Sorry, I did not understand what you mean here! ... Please type menu to go to the main menu.');
 });
 
 
