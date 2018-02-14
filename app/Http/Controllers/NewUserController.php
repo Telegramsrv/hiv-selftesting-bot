@@ -17,7 +17,12 @@ class NewUserController extends Controller
         //get db user
         $db_user = FbUser::where('user_id',$psid)->first();
         if ($db_user != null){
-            $bot->startConversation(new AskAgeAndGender($bot));
+            if (FbUser::where('user_id',$psid)->whereNotNull('age')->first() != null){
+                $menu = new AskAgeAndGender($bot);
+                $menu->displayMainMenu();
+            }else{
+                $bot->startConversation(new AskAgeAndGender($bot));
+            }
         }else{
             $this->saveNewUser($user);
             $bot->reply('Hello, Welcome to the HIV self testing assistant. Here, you will find test guides, 
