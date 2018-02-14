@@ -5,9 +5,14 @@ use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 
 $botman = resolve('botman');
 
-$botman->hears('.*(GET_STARTED|start).*', function ($bot) {
-    $bot->reply('Welcome');
-});
+$botman->hears('GET_STARTED', 'App\Http\Controllers\NewUserController@isNewUser');
+$botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
+$botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
+
+
+
+
+
 $botman->hears('Hi', function ($bot) {
     $bot->reply('Hello!');
 });
