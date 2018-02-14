@@ -14,7 +14,7 @@ $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 
 //main menu payload
 $botman->hears('faqs_1',function ($bot){
-    $bot->startConversation(new ShowFaqs($this->bot));
+    $bot->startConversation(new ShowFaqs($bot));
 });
 /*$botman->hears('instructions_2',);
 $botman->hears('locations_3',);
