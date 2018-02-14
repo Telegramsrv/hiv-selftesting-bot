@@ -25,11 +25,15 @@ class AskAgeAndGender extends Conversation
      */
     public function askAge()
     {
-        $this->ask('Please enter your age eg 24', function(Answer $answer) {
-            // Save result
-            $this->age =  $answer->getText();
-            $this->askGender();
-        });
+        if (FbUser::where('user_id',$this->bot->getUser()->getId())->whereNotNull('age')->first() != null){
+            $this->displayMainMenu();
+        }else{
+            $this->ask('Please enter your age eg 24', function(Answer $answer) {
+                // Save result
+                $this->age =  $answer->getText();
+                $this->askGender();
+            });
+        }
     }
 
     public function askGender(){
@@ -66,18 +70,21 @@ class AskAgeAndGender extends Conversation
 
     public function displayMainMenu(){
 
-        $this->ask('Reply with 1 to get more information on HIV Self Testing.\\nReply with 2 for instructions to use a Self Test Kit.\\nReply with 3 for locations to buy a Self Kit\\nReply with 4 to talk to a Counselor', function(Answer $answer) {
+        $this->ask('Reply with 1 to get more information on HIV Self Testing.
+        Reply with 2 for instructions to use a Self Test Kit.
+        Reply with 3 for locations to buy a Self Kit.
+         Reply with 4 to talk to a Counselor', function(Answer $answer) {
             // Save result
             $menu =  $answer->getText();
             //$this->askGender();
             if ($menu == 1){
                 $this->bot->startConversation(new ShowFaqs($this->bot));
             }elseif($menu == 2){
-
+                $this->bot->reply('We are Still Testing this feature...');
             }elseif($menu == 3){
-
+                $this->bot->reply('We are Still Testing this feature...');
             }elseif($menu == 4){
-
+                $this->bot->reply('We are Still Testing this feature...');
             }else{
                 $this->say('Please select one of the options.');
             }
