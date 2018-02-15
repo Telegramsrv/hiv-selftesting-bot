@@ -32,10 +32,10 @@ class ShowLocations extends Conversation
             $json = file_get_contents($url);
             $data = json_decode($json, true);*/
             //get
-            $distances = array();
+            /*$distances = array();
             $pharmas = Pharmacy::all();
             foreach ($pharmas as $index => $pharma){
-                $distances[$pharma->id] = $pharma->distance;
+                $distances[$pharma->id] = $pharma->distance($this->lat,$this->lon);
             }
             //sort asc
             arsort($distances);
@@ -43,17 +43,14 @@ class ShowLocations extends Conversation
             foreach ($distances as $index => $distance){
                 $pharma = Pharmacy::find($index);
                 break;
-            }
-            // Create attachment
+            }*/
+
             $attachment = new Location(61.766130, -6.822510, [
                 'custom_payload' => true,
             ]);
-            $message = OutgoingMessage::create($pharma->name)
+            $message = OutgoingMessage::create('This is my text')
                 ->withAttachment($attachment);
             $this->bot->reply($message);
-
-
-            //$this->say('Received: '.print_r($data, true));
         }, null, [
             'message' => [
                 'quick_replies' => json_encode([
