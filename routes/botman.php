@@ -100,5 +100,5 @@ $botman->hears('location', function ($bot) {
     ]);
     $message = OutgoingMessage::create('This is my text')
         ->withAttachment($attachment);
-    $this->bot->reply($message);
+    $bot->reply($message);
 });
