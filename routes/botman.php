@@ -6,6 +6,7 @@ use App\Conversations\ShowLocations;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 
 $botman = resolve('botman');
@@ -90,4 +91,14 @@ $botman->hears('user', function ($bot) {
     // Access Information
     $info = $user->getInfo();
     $bot->reply($user->getFirstName());
+});
+
+
+$botman->hears('location', function ($bot) {
+    $attachment = new Location(61.766130, -6.822510, [
+        'custom_payload' => true,
+    ]);
+    $message = OutgoingMessage::create('This is my text')
+        ->withAttachment($attachment);
+    $this->bot->reply($message);
 });
