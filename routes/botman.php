@@ -3,6 +3,7 @@
 use App\Conversations\ShowFaqs;
 use App\Conversations\ShowInstructions;
 use App\Conversations\ShowLocations;
+use App\Conversations\TalkToCounselor;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Drivers\DriverManager;
@@ -38,8 +39,11 @@ $botman->hears('locations_3',function ($bot){
     //$bot->typesAndWaits(2);
     $bot->startConversation(new ShowLocations($bot));
 });
-/*
-$botman->hears('counselors_4',);*/
+
+$botman->hears('counselors_4',function ($bot){
+    //$bot->typesAndWaits(2);
+    $bot->startConversation(new TalkToCounselor($bot));
+});
 
 
 $botman->hears('Hi', function ($bot) {

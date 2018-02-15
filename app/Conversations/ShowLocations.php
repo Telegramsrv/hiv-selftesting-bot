@@ -48,10 +48,7 @@ class ShowLocations extends Conversation
                 break;
             }
             $this->bot->reply($pharma->name);
-            $this->bot->reply($pharma->address);
-            $url =
-            //
-            $this->bot->reply(ButtonTemplate::create('View place on a map')
+            $this->bot->reply(ButtonTemplate::create($pharma->address)
                 ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharma->lat.'/'.$pharma->lon))
             );
 
