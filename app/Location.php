@@ -12,8 +12,6 @@ class Location extends Model
     public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
-    public $lat;
-    public $lon;
 
 
     //

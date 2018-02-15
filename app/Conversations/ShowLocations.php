@@ -45,7 +45,7 @@ class ShowLocations extends Conversation
                 break;
             }
             // Create attachment
-            $attachment = new Location($pharma->lat, $pharma->lon, [
+            $attachment = new Location(61.766130, -6.822510, [
                 'custom_payload' => true,
             ]);
             $message = OutgoingMessage::create($pharma->name)
