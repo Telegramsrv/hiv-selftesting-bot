@@ -5,9 +5,13 @@ use App\Conversations\ShowInstructions;
 use App\Conversations\ShowLocations;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\BotMan;
+use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+
+DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookImageDriver::class);
+DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookLocationDriver::class);
 
 $botman = resolve('botman');
 
