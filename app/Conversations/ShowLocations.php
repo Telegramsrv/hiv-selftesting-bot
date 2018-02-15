@@ -13,6 +13,8 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 class ShowLocations extends Conversation
 {
     public $bot;
+    protected $lat;
+    protected $lon;
     public function __construct(BotMan $bot){
         $this->bot = $bot;
     }
@@ -22,7 +24,11 @@ class ShowLocations extends Conversation
     public function askLocation()
     {
         $this->askForLocation('Please share your location:', function (Location $location) {
-            $this->say('Received: '.print_r($location, true));
+            $this->lat = $location->getLatitude();
+            $this->lon = $location->getLongitude();
+            $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=".$this->lat.",".$this->lon."&sensor=true";
+
+            $this->say('Received: '.print_r($url, true));
         }, null, [
             'message' => [
                 'quick_replies' => json_encode([
