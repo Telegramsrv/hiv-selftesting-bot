@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use Illuminate\Foundation\Inspiring;
