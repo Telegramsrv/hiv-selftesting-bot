@@ -2,6 +2,7 @@
 
 use App\Conversations\ShowFaqs;
 use App\Conversations\ShowInstructions;
+use App\Conversations\ShowLocations;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
@@ -28,7 +29,11 @@ $botman->hears('instructions_2',function ($bot){
     //$bot->typesAndWaits(2);
     $bot->startConversation(new ShowInstructions($bot));
 });
-/*$botman->hears('locations_3',);
+$botman->hears('locations_3',function ($bot){
+    //$bot->typesAndWaits(2);
+    $bot->startConversation(new ShowLocations($bot));
+});
+/*
 $botman->hears('counselors_4',);*/
 
 

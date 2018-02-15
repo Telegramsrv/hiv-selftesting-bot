@@ -37,7 +37,7 @@ class ShowInstructions extends Conversation
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     $this->bot->reply($message);
-                    $this->bot->typesAndWaits(2);
+                    $this->bot->typesAndWaits(3);
                     $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
 
                 } elseif($answer->getValue() === 'Blood') {
