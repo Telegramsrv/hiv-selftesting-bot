@@ -40,7 +40,7 @@ class ShowFaqs extends Conversation
         $faq = Faq::find($this_faq);
         if ($faq != null){
             if ($faq->image != null){
-                $attachment = new Image($faq->image);
+                $attachment = new Image(asset('images/'.$faq->image));
                 $message = OutgoingMessage::create($faq->body)
                     ->withAttachment($attachment);
                 $this->say($faq->title);

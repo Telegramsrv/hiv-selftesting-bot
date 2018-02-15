@@ -12,7 +12,7 @@ $botman->hears('GET_STARTED', 'App\Http\Controllers\NewUserController@isNewUser'
 $botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 
-$botman->hears('stop', function(BotMan $bot) {
+$botman->hears('stop', function($bot) {
     $bot->reply('stopped');
 })->stopsConversation();
 
