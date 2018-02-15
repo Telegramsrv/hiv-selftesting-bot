@@ -6,6 +6,8 @@ use App\Pharmacy;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
+use BotMan\Drivers\Facebook\Extensions\ElementButton;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -32,7 +34,7 @@ class ShowLocations extends Conversation
             $json = file_get_contents($url);
             $data = json_decode($json, true);*/
             //get
-            /*$distances = array();
+            $distances = array();
             $pharmas = Pharmacy::all();
             foreach ($pharmas as $index => $pharma){
                 $distances[$pharma->id] = $pharma->distance($this->lat,$this->lon);
@@ -43,14 +45,14 @@ class ShowLocations extends Conversation
             foreach ($distances as $index => $distance){
                 $pharma = Pharmacy::find($index);
                 break;
-            }*/
+            }
+            $this->bot->reply($pharma->name);
+            $this->bot->reply($pharma->address);
+            //
+            $this->bot->reply(ButtonTemplate::create('View place on a map')
+                ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/'.$pharma->lat.'/'.$pharma->lon))
+            );
 
-            $attachment = new Location(61.766130, -6.822510, [
-                'custom_payload' => true,
-            ]);
-            $message = OutgoingMessage::create('This is my text')
-                ->withAttachment($attachment);
-            $this->bot->reply($message);
         }, null, [
             'message' => [
                 'quick_replies' => json_encode([
@@ -61,23 +63,6 @@ class ShowLocations extends Conversation
             ]
         ]);
 
-        /*$question = Question::create("Please Share your location or typein your county")
-            ->callbackId('ask_location')
-            ->addButtons([
-                Button::create('Tell a joke')->value('joke'),
-                Button::create('Give me a fancy quote')->value('quote'),
-            ]);
-
-        return $this->ask($question, function (Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                if ($answer->getValue() === 'joke') {
-                    $joke = json_decode(file_get_contents('http://api.icndb.com/jokes/random'));
-                    $this->say($joke->value->joke);
-                } else {
-                    $this->say(Inspiring::quote());
-                }
-            }
-        });*/
     }
 
     /**
