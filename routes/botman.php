@@ -2,6 +2,7 @@
 
 use App\Conversations\ShowFaqs;
 use App\Http\Controllers\BotManController;
+use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 
@@ -11,6 +12,9 @@ $botman->hears('GET_STARTED', 'App\Http\Controllers\NewUserController@isNewUser'
 $botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 
+$botman->hears('stop', function(BotMan $bot) {
+    $bot->reply('stopped');
+})->stopsConversation();
 
 //main menu payload
 $botman->hears('faqs_1',function ($bot){
