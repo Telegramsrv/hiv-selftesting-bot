@@ -28,7 +28,10 @@ class ShowLocations extends Conversation
             $this->lon = $location->getLongitude();
             $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=".$this->lat.",".$this->lon."&sensor=true";
 
-            $this->say('Received: '.print_r($url, true));
+            $json = file_get_contents($url);
+            $data = json_decode($json, true);
+
+            $this->say('Received: '.print_r($data, true));
         }, null, [
             'message' => [
                 'quick_replies' => json_encode([
