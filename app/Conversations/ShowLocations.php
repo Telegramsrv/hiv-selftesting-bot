@@ -2,8 +2,10 @@
 
 namespace App\Conversations;
 
+use App\Pharmacy;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Location;
+use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -26,12 +28,32 @@ class ShowLocations extends Conversation
         $this->askForLocation('Please share your location:', function (Location $location) {
             $this->lat = $location->getLatitude();
             $this->lon = $location->getLongitude();
-            $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=".$this->lat.",".$this->lon."&sensor=true";
-
+            /*$url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=".$this->lat.",".$this->lon."&sensor=true";
             $json = file_get_contents($url);
-            $data = json_decode($json, true);
+            $data = json_decode($json, true);*/
+            //get
+            $distances = array();
+            $pharmas = Pharmacy::all();
+            foreach ($pharmas as $index => $pharma){
+                $distances[$pharma->id] = $pharma->distance;
+            }
+            //sort asc
+            arsort($distances);
+            //get first location
+            foreach ($distances as $index => $distance){
+                $pharma = Pharmacy::find($index);
+                break;
+            }
+            // Create attachment
+            $attachment = new Location($pharma->lat, $pharma->lon, [
+                'custom_payload' => true,
+            ]);
+            $message = OutgoingMessage::create($pharma->name)
+                ->withAttachment($attachment);
+            $this->bot->reply($message);
 
-            $this->say('Received: '.print_r($data, true));
+
+            //$this->say('Received: '.print_r($data, true));
         }, null, [
             'message' => [
                 'quick_replies' => json_encode([
