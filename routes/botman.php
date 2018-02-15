@@ -96,13 +96,3 @@ $botman->hears('user', function ($bot) {
     $info = $user->getInfo();
     $bot->reply($user->getFirstName());
 });
-
-
-$botman->hears('location', function ($bot) {
-    $attachment = new Location(61.766130, -6.822510, [
-        'custom_payload' => true,
-    ]);
-    $message = OutgoingMessage::create('This is my text')
-        ->withAttachment($attachment);
-    $bot->reply($message);
-});

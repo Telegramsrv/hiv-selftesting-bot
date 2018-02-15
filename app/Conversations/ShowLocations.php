@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Location as DBLocation;
 use App\Pharmacy;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Location;
@@ -37,7 +38,7 @@ class ShowLocations extends Conversation
             $distances = array();
             $pharmas = Pharmacy::all();
             foreach ($pharmas as $index => $pharma){
-                $distances[$pharma->id] = $pharma->distance($this->lat,$this->lon);
+                $distances[$pharma->id] = DBLocation::distance($pharma->lat, $pharma->lon, $this->lat,$this->lon);
             }
             //sort asc
             arsort($distances);

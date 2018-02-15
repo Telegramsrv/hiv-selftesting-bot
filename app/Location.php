@@ -15,10 +15,10 @@ class Location extends Model
 
 
     //
-    function distance($lat2, $lon2, $unit='K') {
+    public static function distance($lat1, $lon1, $lat2, $lon2, $unit='K') {
 
-        $theta = $this->lon - $lon2;
-        $dist = sin(deg2rad($this->lat)) * sin(deg2rad($lat2)) +  cos(deg2rad($this->lat)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
