@@ -45,6 +45,7 @@ class ShowFaqs extends Conversation
                     ->withAttachment($attachment);
                 $this->say($faq->title);
                 $this->bot->reply($message);
+                $this->say($faq->body);
             }else{
                 $this->say($faq->title);
                 $this->say($faq->body);

@@ -12,6 +12,8 @@ $botman->hears('GET_STARTED', 'App\Http\Controllers\NewUserController@isNewUser'
 $botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 
+$botman->hears('menu','App\Conversations\AskAgeAndGender@displayMainMenu');
+
 $botman->hears('stop', function($bot) {
     $bot->reply('stopped');
 })->stopsConversation();
