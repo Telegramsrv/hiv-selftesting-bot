@@ -80,48 +80,24 @@ return [
             'composer_input_disabled' => 'false',
             'call_to_actions' => [
                 [
-                    'title' => 'FAQs',
-                    'type' => 'nested',
-                    'call_to_actions' => [
-                        [
-                            'title' => 'View FAQs',
-                            'type' => 'postback',
-                            'payload' => 'faqs_1',
-                        ],
-                    ],
+                    'title' => 'View FAQs',
+                    'type' => 'postback',
+                    'payload' => 'faqs_1',
                 ],
                 [
-                    'title' => 'How to use a Kit',
-                    'type' => 'nested',
-                    'call_to_actions' => [
-                        [
-                            'title' => 'Instructions',
-                            'type' => 'postback',
-                            'payload' => 'instructions_2',
-                        ],
-                    ],
+                    'title' => 'Instructions',
+                    'type' => 'postback',
+                    'payload' => 'instructions_2',
                 ],
                 [
-                    'title' => 'Where to Buy a Kit',
-                    'type' => 'nested',
-                    'call_to_actions' => [
-                        [
-                            'title' => 'Find Locations',
-                            'type' => 'postback',
-                            'payload' => 'locations_3',
-                        ],
-                    ],
+                    'title' => 'Find Locations',
+                    'type' => 'postback',
+                    'payload' => 'locations_3',
                 ],
                 [
-                    'title' => 'Talk to a Counselor',
-                    'type' => 'nested',
-                    'call_to_actions' => [
-                        [
-                            'title' => 'Contact a counselor',
-                            'type' => 'postback',
-                            'payload' => 'counselors_4',
-                        ],
-                    ],
+                    'title' => 'Contact a counselor',
+                    'type' => 'postback',
+                    'payload' => 'counselors_4',
                 ],
             ],
         ],
