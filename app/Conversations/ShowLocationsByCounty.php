@@ -40,7 +40,7 @@ class ShowLocationsByCounty extends Conversation
             // Save result
             $this->county = $answer->getText();
             //get pharmacies in county
-            $pharmacies = Pharmacy::where('county','like','%'.$this->county.'%')->take(4);
+            $pharmacies = Pharmacy::where('county','like','%'.$this->county.'%')->take(4)->get();
             if (count($pharmacies)>0 && $pharmacies != null){
                 $this->bot->reply('Here is a List of the nearest pharmacies where you can get an HIV self test kit');
                 $this->sendLocationsList($pharmacies);

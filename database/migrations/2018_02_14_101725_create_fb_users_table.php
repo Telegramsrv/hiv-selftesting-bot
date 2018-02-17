@@ -24,6 +24,7 @@ class CreateFbUsersTable extends Migration
             $table->string('user_name',100)->nullable();
             $table->string('age',100)->nullable();
             $table->string('user_gender',100)->nullable();
+            $table->boolean('followed')->default(0)->nullable();
             $table->timestamps();
         });
     }
