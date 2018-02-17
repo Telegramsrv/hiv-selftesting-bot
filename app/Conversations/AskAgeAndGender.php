@@ -74,6 +74,8 @@ class AskAgeAndGender extends Conversation
 
     public function displayMainMenu(){
         $this->bot->typesAndWaits(2);
+        $this->say('Please choose from the menu below');
+        $this->bot->typesAndWaits(2);
         $this->bot->reply(ListTemplate::create()
             ->useCompactView()
             ->addElement(

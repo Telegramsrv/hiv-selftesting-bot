@@ -34,6 +34,7 @@ class ShowInstructions extends Conversation
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getValue() === 'Oral') {
+                    FlowRunsController::saveRun($this->bot,6);
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/oral-kit.mp4',[
                         'custom_payload' => true,
                     ]);
@@ -43,7 +44,7 @@ class ShowInstructions extends Conversation
                     $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
 
                 } elseif($answer->getValue() === 'Blood') {
-                    //
+                    FlowRunsController::saveRun($this->bot,7);
                 }else{
                     $this->askKitType();
                 }

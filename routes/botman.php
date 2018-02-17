@@ -5,11 +5,14 @@ use App\Conversations\ShowInstructions;
 use App\Conversations\ShowLocations;
 use App\Conversations\TalkToCounselor;
 use App\Http\Controllers\BotManController;
+use App\Http\Controllers\FlowRunsController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
+use BotMan\Drivers\Facebook\Extensions\ElementButton;
 
 DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookImageDriver::class);
 DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookLocationDriver::class);
@@ -37,8 +40,12 @@ $botman->hears('instructions_2',function ($bot){
     $bot->startConversation(new ShowInstructions($bot));
 });
 $botman->hears('locations_3',function ($bot){
+    FlowRunsController::saveRun($bot,4);
+    $bot->reply(ButtonTemplate::create('We shall use your location to find Pharmacies closest to you where you can buy a self test kit')
+        ->addButton(ElementButton::create('Use my location (more accurate)')->type('postback')->payload('use_my_location'))
+        ->addButton(ElementButton::create('Choose my county')->type('postback')->payload('choose_my_county'))
+    );
     //$bot->typesAndWaits(2);
-    $bot->startConversation(new ShowLocations($bot));
 });
 
 $botman->hears('counselors_4',function ($bot){
@@ -56,6 +63,16 @@ $botman->hears('faq__{id}',function ($bot,$id){
 $botman->hears('ask_question', function ($bot) {
     $bot->reply('Your question has been received. You will get a reply shortly.');
 });
+
+//capture location sharing type
+$botman->hears('use_my_location', function ($bot) {
+    $bot->startConversation(new ShowLocations($bot));
+});
+$botman->hears('choose_my_county', function ($bot) {
+    $bot->reply('Your question has been received. You will get a reply shortly.');
+});
+
+
 
 $botman->hears('Hi', function ($bot) {
     $bot->reply('Hello!');

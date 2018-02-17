@@ -26,6 +26,11 @@ class TalkToCounselor extends Conversation
         $this->bot->reply('Contact 1190 toll free or visit www.besure.co.ke for more information');
         $this->ask('You can ask a question and a counselor will send you a reply. Ask Question', function(Answer $answer) {
             $this->quest = $answer->getText();
+            $qn = new \App\Question;
+            $user = $this->bot->getUser();
+            $qn->psid = $user->getId();
+            $qn->body = $this->quest;
+            $qn->save();
             $this->say('Your question has been received. You will get a reply seen');
         });
     }
