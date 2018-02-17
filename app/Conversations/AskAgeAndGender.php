@@ -57,6 +57,8 @@ class AskAgeAndGender extends Conversation
                 $selectedText = $answer->getText();
                 $this->gender = $selectedValue;
                 $this->saveAgeAndGender();
+            }else{
+                $this->askGender();
             }
         });
     }

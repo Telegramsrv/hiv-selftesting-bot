@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Conversations\Followup;
+use App\Conversations\TestFollowup;
 use App\FbUser;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Drivers\DriverManager;
@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
                 $botman = resolve('botman');
                 foreach ($unfollowed_users as $u_user){
                     $botman->say('Thank you for using the HIV Self Testing ChartBot.', $u_user->user_id, FacebookDriver::class);
-                    $botman->startConversation(new Followup($botman), $u_user->user_id, FacebookDriver::class);
+                    $botman->startConversation(new TestFollowup($botman), $u_user->user_id, FacebookDriver::class);
                 }
             }
         })->hourly();

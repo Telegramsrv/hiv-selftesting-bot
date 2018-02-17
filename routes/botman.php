@@ -43,7 +43,7 @@ $botman->hears('instructions_2',function ($bot){
 $botman->hears('locations_3',function ($bot){
     FlowRunsController::saveRun($bot,4);
     $bot->reply(ButtonTemplate::create('We shall use your location to find Pharmacies closest to you where you can buy a self test kit')
-        ->addButton(ElementButton::create('Use my location (more accurate)')->type('postback')->payload('use_my_location'))
+        ->addButton(ElementButton::create('Use my location')->type('postback')->payload('use_my_location'))
         ->addButton(ElementButton::create('Choose my county')->type('postback')->payload('choose_my_county'))
     );
     //$bot->typesAndWaits(2);

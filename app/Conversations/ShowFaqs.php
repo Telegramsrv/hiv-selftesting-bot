@@ -103,12 +103,14 @@ class ShowFaqs extends Conversation
             ->callbackId('after_faq')
             ->addButtons($buttons);
 
-        $this->ask($question, function (Answer $answer) {
+        $this->ask($question, function (Answer $answer) use ($actions) {
             // Detect if button was clicked:
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
                 $selectedText = $answer->getText();
                 $this->bot->reply($selectedText);
+            }else{
+                $this->sendFaqActions($actions);
             }
         });
     }
