@@ -56,11 +56,12 @@ return [
         'greeting' => [
             [
                 'locale' => 'default',
-                'text' => 'Hello!',
+                'text' => 'Welcome!',
             ],
             [
                 'locale' => 'en_US',
-                'text' => 'HIV Self testing.',
+                'text' => 'An HIV Self testing Chatbot that provides frequently asked question, where to buy test kits, 
+                How to use the test kits, and how to contact a counselor.',
             ],
         ],
     ],
@@ -76,24 +77,51 @@ return [
     'persistent_menu' => [
         [
             'locale' => 'default',
-            'composer_input_disabled' => 'true',
+            'composer_input_disabled' => 'false',
             'call_to_actions' => [
                 [
-                    'title' => 'My Account',
+                    'title' => 'FAQs',
                     'type' => 'nested',
                     'call_to_actions' => [
                         [
-                            'title' => 'Pay Bill',
+                            'title' => 'View FAQs',
                             'type' => 'postback',
-                            'payload' => 'PAYBILL_PAYLOAD',
+                            'payload' => 'faqs_1',
                         ],
                     ],
                 ],
                 [
-                    'type' => 'web_url',
-                    'title' => 'Latest News',
-                    'url' => 'http://botman.io',
-                    'webview_height_ratio' => 'full',
+                    'title' => 'How to use a Kit',
+                    'type' => 'nested',
+                    'call_to_actions' => [
+                        [
+                            'title' => 'Instructions',
+                            'type' => 'postback',
+                            'payload' => 'instructions_2',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'Where to Buy a Kit',
+                    'type' => 'nested',
+                    'call_to_actions' => [
+                        [
+                            'title' => 'Find Locations',
+                            'type' => 'postback',
+                            'payload' => 'locations_3',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'Talk to a Counselor',
+                    'type' => 'nested',
+                    'call_to_actions' => [
+                        [
+                            'title' => 'Contact a counselor',
+                            'type' => 'postback',
+                            'payload' => 'counselors_4',
+                        ],
+                    ],
                 ],
             ],
         ],

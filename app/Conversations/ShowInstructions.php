@@ -39,12 +39,16 @@ class ShowInstructions extends Conversation
                         'custom_payload' => true,
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
-                    $this->bot->reply($message);
+                    //$this->bot->reply($message);
+                    $this->say('Oral Test Video');
                     $this->bot->typesAndWaits(3);
                     $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
 
                 } elseif($answer->getValue() === 'Blood') {
                     FlowRunsController::saveRun($this->bot,7);
+                    $this->say('Blood Test Video');
+                    $this->bot->typesAndWaits(3);
+                    $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
                 }else{
                     $this->askKitType();
                 }
