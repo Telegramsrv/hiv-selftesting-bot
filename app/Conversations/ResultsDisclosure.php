@@ -65,6 +65,9 @@ class ResultsDisclosure extends Conversation
                 }else{
                     $this->disclose();
                 }
+                $this->fb_user->followed = 1;
+                $this->fb_user->save();
+
             }else{
                 $this->disclose();
             }
