@@ -49,9 +49,11 @@ class TestFollowup extends Conversation
                 if ($selectedValue == 'YES_TEST'){
                     $this->fb_user->tested = 1;
                     $this->fb_user->save();
+                    $this->startYesTest();
                 }elseif($selectedValue == 'NO_TEST'){
                     $this->fb_user->tested = 0;
                     $this->fb_user->save();
+                    $this->startNoTest();
                 }else{
                     $this->startFollowup();
                 }
