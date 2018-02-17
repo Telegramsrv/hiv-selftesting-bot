@@ -3,6 +3,7 @@
 use App\Conversations\ShowFaqs;
 use App\Conversations\ShowInstructions;
 use App\Conversations\ShowLocations;
+use App\Conversations\ShowLocationsByCounty;
 use App\Conversations\TalkToCounselor;
 use App\Http\Controllers\BotManController;
 use App\Http\Controllers\FlowRunsController;
@@ -61,7 +62,7 @@ $botman->hears('faq__{id}',function ($bot,$id){
 
 //ask questions
 $botman->hears('ask_question', function ($bot) {
-    $bot->reply('Your question has been received. You will get a reply shortly.');
+    $bot->startConversation(new TalkToCounselor($bot));
 });
 
 //capture location sharing type
@@ -69,7 +70,7 @@ $botman->hears('use_my_location', function ($bot) {
     $bot->startConversation(new ShowLocations($bot));
 });
 $botman->hears('choose_my_county', function ($bot) {
-    $bot->reply('Your question has been received. You will get a reply shortly.');
+    $bot->startConversation(new ShowLocationsByCounty($bot));
 });
 
 

@@ -47,12 +47,13 @@ class ShowFaqs extends Conversation
                     ->payload('faq__'.$faqs[$i]->id)->type('postback'));
             array_push($elements, $element);
         }
-        array_push($elements, Element::create("Can't find what you're looking for?")
+        $element = Element::create("Can't find what you're looking for?")
             ->subtitle('Here are more options you can try')
             ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
             ->addButton(ElementButton::create('visit website')->url('http://besure.co.ke'))
             ->addButton(ElementButton::create('Ask Question')
-                ->payload('ask_question'.$faqs[$i]->id)->type('postback')));
+                ->payload('ask_question')->type('postback'));
+        array_push($elements, $element);
         return $elements;
     }
 
