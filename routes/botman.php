@@ -19,6 +19,7 @@ $botman = resolve('botman');
 $botman->hears('GET_STARTED', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('start', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
+$botman->hears('st', 'App\Http\Controllers\NewUserController@isNewUser');
 
 $botman->hears('menu','App\Conversations\AskAgeAndGender@displayMainMenu');
 
@@ -51,6 +52,10 @@ $botman->hears('faq__{id}',function ($bot,$id){
     $faq_details->showFaqDetails($id);
 });
 
+//ask questions
+$botman->hears('ask_question', function ($bot) {
+    $bot->reply('Your question has been received. You will get a reply shortly.');
+});
 
 $botman->hears('Hi', function ($bot) {
     $bot->reply('Hello!');

@@ -4,6 +4,7 @@ namespace App\Conversations;
 
 use App\Faq;
 use App\FaqAction;
+use App\Http\Controllers\FlowRunsController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
@@ -27,21 +28,11 @@ class ShowFaqs extends Conversation
      */
     public function showAllFaqs()
     {
+        FlowRunsController::saveRun($this->bot,2);
         $this->bot->reply(GenericTemplate::create()
             ->addImageAspectRatio(GenericTemplate::RATIO_SQUARE)
             ->addElements($this->makeTemplateElements())
         );
-        /*$faqs = Faq::all();
-        foreach ($faqs as $faq){
-            $this->say(($faq->id).': '.$faq->title);
-        }
-        $this->ask('Please enter the number of the FAQ to view details', function(Answer $answer) {
-            // Save result
-            $this_faq =  $answer->getText();
-            $this->showFaqDetails($this_faq);
-
-        });*/
-
     }
 
     public function makeTemplateElements(){
@@ -49,13 +40,19 @@ class ShowFaqs extends Conversation
         $faqs = Faq::all();
         for ($i=0;$i<count($faqs);$i++){
             $element = Element::create($faqs[$i]->title)
-                ->subtitle(substr($faqs[$i]->body,0,30).'...')
+                ->subtitle(substr($faqs[$i]->body,0,40).'...')
                 ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
                 ->addButton(ElementButton::create('visit')->url('http://developers.tmcg.co.ug'))
                 ->addButton(ElementButton::create('tell me more')
                     ->payload('faq__'.$faqs[$i]->id)->type('postback'));
             array_push($elements, $element);
         }
+        array_push($elements, Element::create("Can't find what you're looking for?")
+            ->subtitle('Here are more options you can try')
+            ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
+            ->addButton(ElementButton::create('visit website')->url('http://besure.co.ke'))
+            ->addButton(ElementButton::create('Ask Question')
+                ->payload('ask_question'.$faqs[$i]->id)->type('postback')));
         return $elements;
     }
 

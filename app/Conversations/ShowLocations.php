@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Http\Controllers\FlowRunsController;
 use App\Location as DBLocation;
 use App\Pharmacy;
 use BotMan\BotMan\BotMan;
@@ -30,6 +31,7 @@ class ShowLocations extends Conversation
      */
     public function askLocation()
     {
+        FlowRunsController::saveRun($this->bot,4);
         $this->say('We shall use your location to find Pharmacies closest to you where you can buy a self test kit');
         $this->askForLocation('Please share your location:', function (Location $location) {
             $this->lat = $location->getLatitude();

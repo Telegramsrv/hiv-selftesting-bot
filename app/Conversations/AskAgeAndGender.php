@@ -3,6 +3,7 @@
 namespace App\Conversations;
 
 use App\FbUser;
+use App\FlowRun;
 use BotMan\BotMan\BotMan;
 use BotMan\Drivers\Facebook\Extensions\Element;
 use BotMan\Drivers\Facebook\Extensions\ElementButton;

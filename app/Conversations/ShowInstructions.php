@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Http\Controllers\FlowRunsController;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
@@ -21,6 +22,7 @@ class ShowInstructions extends Conversation
      * First question
      */
     public function askKitType(){
+        FlowRunsController::saveRun($this->bot,3);
         $question = Question::create("Please select the type of Kit you are interested in")
             ->fallback('Unable to ask kit type question')
             ->callbackId('ask_kit_type')

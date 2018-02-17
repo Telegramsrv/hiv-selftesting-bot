@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 //use BotMan\BotMan\BotMan;
 use App\Conversations\AskAgeAndGender;
 use App\FbUser;
+use App\FlowRun;
+use BotMan\BotMan\Facades\BotMan;
 use Illuminate\Http\Request;
 
 class NewUserController extends Controller
@@ -22,12 +24,14 @@ class NewUserController extends Controller
                 $menu->displayMainMenu();
             }else{
                 $bot->startConversation(new AskAgeAndGender($bot));
+                FlowRunsController::saveRun($bot,1);
             }
         }else{
             $this->saveNewUser($user);
             $bot->reply('Hello, Welcome to the HIV self testing assistant. Here, you will find test guides, 
             ask questions, get answers, and speak to a health specialist if need arises. Lets proceed.');
             $bot->startConversation(new AskAgeAndGender($bot));
+            FlowRunsController::saveRun($bot,1);
             //return true;
         }
     }

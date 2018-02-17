@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Http\Controllers\FlowRunsController;
 use BotMan\BotMan\BotMan;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -21,6 +22,7 @@ class TalkToCounselor extends Conversation
      */
     public function sendContact()
     {
+        FlowRunsController::saveRun($this->bot,5);
         $this->bot->reply('Contact 1190 toll free or visit www.besure.co.ke for more information');
         $this->ask('You can ask a question and a counselor will send you a reply. Ask Question', function(Answer $answer) {
             $this->quest = $answer->getText();
