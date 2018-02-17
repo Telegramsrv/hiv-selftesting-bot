@@ -89,6 +89,7 @@ class TestFollowup extends Conversation
                 }
                 //ask where kit was bought
                 $this->askPlace();
+                $this->askKitType();
             }else{
                 $this->startYesTest();
             }
