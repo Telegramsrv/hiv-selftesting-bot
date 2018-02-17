@@ -51,17 +51,17 @@ class ResultsDisclosure extends Conversation
                     $this->fb_user->results = 'Positive';
                     $this->fb_user->save();
                     $this->say('What to do with Positive Results .....');
-                    $this->startConversation(new TalkToCounselor($this->bot));
+                    $this->bot->startConversation(new TalkToCounselor($this->bot));
                     $this->say('What to do with Positive Results .....');
                 }elseif($selectedValue == 'NEGATIVE'){
                     $this->fb_user->results = 'Negative';
                     $this->fb_user->save();
-                    $this->startConversation(new TalkToCounselor($this->bot));
+                    $this->bot->startConversation(new TalkToCounselor($this->bot));
                 }elseif($selectedValue == 'UNCLEAR'){
                     $this->fb_user->results = 'Unclear';
                     $this->fb_user->save();
                     $this->say('What to do with Positive Results .....');
-                    $this->startConversation(new TalkToCounselor($this->bot));
+                    $this->bot->startConversation(new TalkToCounselor($this->bot));
                 }else{
                     $this->disclose();
                 }
