@@ -32,7 +32,9 @@ class ShowLocationsByCounty extends Conversation
     public function askCounty()
     {
         FlowRunsController::saveRun($this->bot,8);
-        $attachment = new Image('http://developers.tmcg.co.ug/images/positive.jpg');
+        $attachment = new Image('http://developers.tmcg.co.ug/images/positive.jpg', [
+            'custom_payload' => true,
+        ]);
         $message = OutgoingMessage::create('Use the image below and reply with the name of your county')
             ->withAttachment($attachment);
         $this->say('Use the image below and reply with the name of your county');
@@ -52,43 +54,49 @@ class ShowLocationsByCounty extends Conversation
     }
 
     public function sendLocationsList($pharmacies){
-        $this->bot->reply(ListTemplate::create()
-            ->useCompactView()
-            ->addElement(
-                Element::create($pharmacies[0]->name)
-                    ->subtitle($pharmacies[0]->address.' - '.$pharmacies[0]->county)
-                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
-                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[0]->lat.'/'.$pharmacies[0]->lon))
-            )
-            ->addElement(
-                Element::create($pharmacies[1]->name)
-                    ->subtitle($pharmacies[1]->address.' - '.$pharmacies[1]->county)
-                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
-                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[1]->lat.'/'.$pharmacies[1]->lon))
-            )
-            ->addElement(
-                Element::create($pharmacies[2]->name)
-                    ->subtitle($pharmacies[2]->address.' - '.$pharmacies[2]->county)
-                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
-                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[2]->lat.'/'.$pharmacies[2]->lon))
-            )
-            ->addElement(
-                Element::create($pharmacies[3]->name)
+        if (count($pharmacies) == 1){
+            $this->bot->reply(ListTemplate::create()
+                ->useCompactView()
+                ->addElement($this->addPharmacy($pharmacies[0]))
+            );
+        }elseif (count($pharmacies) == 2){
+            $this->bot->reply(ListTemplate::create()
+                ->useCompactView()
+                ->addElement($this->addPharmacy($pharmacies[0]))
+                ->addElement($this->addPharmacy($pharmacies[1]))
+            );
+        }elseif (count($pharmacies) == 3){
+            $this->bot->reply(ListTemplate::create()
+                ->useCompactView()
+                ->addElement($this->addPharmacy($pharmacies[0]))
+                ->addElement($this->addPharmacy($pharmacies[1]))
+                ->addElement($this->addPharmacy($pharmacies[2]))
+            );
+        }elseif (count($pharmacies) == 4){
+            $this->bot->reply(ListTemplate::create()
+                ->useCompactView()
+                ->addElement($this->addPharmacy($pharmacies[0]))
+                ->addElement($this->addPharmacy($pharmacies[1]))
+                ->addElement($this->addPharmacy($pharmacies[2]))
+                ->addElement($this->addPharmacy($pharmacies[3]))
+            );
+        }else{
+            $this->askCounty();
+        }
+    }
+
+    public function addPharmacy($pharmacy){
+        $element = Element::create($pharmacy->name)
+            ->subtitle($pharmacy->address.' - '.$pharmacy->county)
+            ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+            ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacy->lat.'/'.$pharmacy->lon));
+        return $element;
+    }
+
+    /**Element::create($pharmacies[3]->name)
                     ->subtitle($pharmacies[3]->address.' - '.$pharmacies[3]->county)
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[3]->lat.'/'.$pharmacies[3]->lon))
-            )
-        );
-    }
-
-    public function useCoordinates(){
-
-    }
-
-    public function useCounty(){
-
-    }
-    /**
      * Start the conversation
      */
     public function run()
