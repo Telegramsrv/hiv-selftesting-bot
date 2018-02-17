@@ -72,26 +72,6 @@ class AskAgeAndGender extends Conversation
     }
 
     public function displayMainMenu(){
-
-        /*$this->ask('Reply with 1 to get more information on HIV Self Testing.
-        Reply with 2 for instructions to use a Self Test Kit.
-        Reply with 3 for locations to buy a Self Kit.
-         Reply with 4 to talk to a Counselor', function(Answer $answer) {
-            // Save result
-            $menu =  $answer->getText();
-            //$this->askGender();
-            if ($menu == 1){
-                $this->bot->startConversation(new ShowFaqs($this->bot));
-            }elseif($menu == 2){
-                $this->bot->reply('We are Still Testing this feature...');
-            }elseif($menu == 3){
-                $this->bot->reply('We are Still Testing this feature...');
-            }elseif($menu == 4){
-                $this->bot->reply('We are Still Testing this feature...');
-            }else{
-                $this->say('Please select one of the options.');
-            }
-        });*/
         $this->bot->typesAndWaits(2);
         $this->bot->reply(ListTemplate::create()
             ->useCompactView()

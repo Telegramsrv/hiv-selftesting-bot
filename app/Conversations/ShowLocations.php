@@ -8,7 +8,9 @@ use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
+use BotMan\Drivers\Facebook\Extensions\Element;
 use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\Drivers\Facebook\Extensions\ListTemplate;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -28,6 +30,7 @@ class ShowLocations extends Conversation
      */
     public function askLocation()
     {
+        $this->say('We shall use your location to find Pharmacies closest to you where you can buy a self test kit');
         $this->askForLocation('Please share your location:', function (Location $location) {
             $this->lat = $location->getLatitude();
             $this->lon = $location->getLongitude();
@@ -42,15 +45,19 @@ class ShowLocations extends Conversation
             }
             //sort asc
             arsort($distances);
-            //get first location
+            //get first 3 locations
+            $pharmacies = array();
+            $i=0;
             foreach ($distances as $index => $distance){
                 $pharma = Pharmacy::find($index);
-                break;
+                array_push($pharmacies, $pharma);
+                $i++;
+                if ($i>2){
+                    break;
+                }
             }
-            $this->bot->reply($pharma->name);
-            $this->bot->reply(ButtonTemplate::create($pharma->address)
-                ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharma->lat.'/'.$pharma->lon))
-            );
+            $this->bot->reply('Here is a List of the nearest pharmacies where you can get an HIV self test kit');
+            $this->sendLocationsList($pharmacies);
 
         }, null, [
             'message' => [
@@ -61,7 +68,30 @@ class ShowLocations extends Conversation
                 ])
             ]
         ]);
+    }
 
+    public function sendLocationsList($pharmacies){
+        $this->bot->reply(ListTemplate::create()
+            ->useCompactView()
+            ->addElement(
+                Element::create($pharmacies[0]->name)
+                    ->subtitle($pharmacies[0]->address.' - '.$pharmacies[0]->county)
+                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[0]->lat.'/'.$pharmacies[0]->lon))
+            )
+            ->addElement(
+                Element::create($pharmacies[1]->name)
+                    ->subtitle($pharmacies[1]->address.' - '.$pharmacies[1]->county)
+                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[1]->lat.'/'.$pharmacies[1]->lon))
+            )
+            ->addElement(
+                Element::create($pharmacies[2]->name)
+                    ->subtitle($pharmacies[2]->address.' - '.$pharmacies[2]->county)
+                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[2]->lat.'/'.$pharmacies[2]->lon))
+            )
+        );
     }
 
     /**
