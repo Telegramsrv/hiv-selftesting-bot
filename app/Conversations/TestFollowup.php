@@ -89,7 +89,6 @@ class TestFollowup extends Conversation
                 }
                 //ask where kit was bought
                 $this->askPlace();
-                $this->askKitType();
             }else{
                 $this->startYesTest();
             }
@@ -107,8 +106,14 @@ class TestFollowup extends Conversation
     public function askPlace(){
         $this->ask('Where Did you purchase the Self Test Kit?', function(Answer $answer) {
             // Save result
-            $this->fb_user->bought_from = $answer->getText();
-            $this->fb_user->save();
+            $b_f = $answer->getText();
+            if (isset($b_f) && !empty($b_f) && $b_f!=''){
+                $this->fb_user->bought_from = $b_f;
+                $this->fb_user->save();
+                $this->askKitType();
+            }else{
+                $this->askPlace();
+            }
         });
     }
 
