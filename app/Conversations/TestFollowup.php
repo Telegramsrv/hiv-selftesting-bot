@@ -141,7 +141,7 @@ class TestFollowup extends Conversation
                     $this->askKitType();
                 }
                 //disclose results
-                $this->startConversation(new ResultsDisclosure($this->bot));
+                $this->bot->startConversation(new ResultsDisclosure($this->bot));
 
             }else{
                 $this->askKitType();
