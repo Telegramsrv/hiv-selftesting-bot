@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                     $botman->startConversation(new Followup($botman), $u_user->user_id, FacebookDriver::class);
                 }
             }
-        })->everyMinute();
+        })->hourly();
     }
 
     /**
