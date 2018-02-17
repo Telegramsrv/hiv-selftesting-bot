@@ -35,13 +35,19 @@ class ShowLocationsByCounty extends Conversation
         $attachment = new Image('http://developers.tmcg.co.ug/images/positive.jpg');
         $message = OutgoingMessage::create('Use the image below and reply with the name of your county')
             ->withAttachment($attachment);
+        $this->say('Use the image below and reply with the name of your county');
         $this->ask($message, function(Answer $answer) {
             // Save result
             $this->county = $answer->getText();
             //get pharmacies in county
             $pharmacies = Pharmacy::where('county','like','%'.$this->county.'%')->take(4);
-            $this->bot->reply('Here is a List of the nearest pharmacies where you can get an HIV self test kit');
-            $this->sendLocationsList($pharmacies);
+            if (count($pharmacies)>0 && $pharmacies != null){
+                $this->bot->reply('Here is a List of the nearest pharmacies where you can get an HIV self test kit');
+                $this->sendLocationsList($pharmacies);
+            }else{
+                $this->say($this->county.' County not Found!');
+                $this->askCounty();
+            }
         });
     }
 
