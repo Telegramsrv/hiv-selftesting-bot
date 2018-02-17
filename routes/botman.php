@@ -45,6 +45,11 @@ $botman->hears('counselors_4',function ($bot){
     $bot->startConversation(new TalkToCounselor($bot));
 });
 
+//single faq payload details
+$botman->hear('.*(faq__|faq___).*',function ($bot){
+    $bot->reply($bot->getMessage());
+});
+
 
 $botman->hears('Hi', function ($bot) {
     $bot->reply('Hello!');

@@ -6,6 +6,9 @@ use App\Faq;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use BotMan\Drivers\Facebook\Extensions\Element;
+use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\Drivers\Facebook\Extensions\GenericTemplate;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -23,7 +26,11 @@ class ShowFaqs extends Conversation
      */
     public function showAllFaqs()
     {
-        $faqs = Faq::all();
+        $this->bot->reply(GenericTemplate::create()
+            ->addImageAspectRatio(GenericTemplate::RATIO_SQUARE)
+            ->addElements($this->makeTemplateElements())
+        );
+        /*$faqs = Faq::all();
         foreach ($faqs as $faq){
             $this->say(($faq->id).': '.$faq->title);
         }
@@ -32,8 +39,23 @@ class ShowFaqs extends Conversation
             $this_faq =  $answer->getText();
             $this->showFaqDetails($this_faq);
 
-        });
+        });*/
 
+    }
+
+    public function makeTemplateElements(){
+        $elements = array();
+        $faqs = Faq::all();
+        for ($i=0;$i<count($faqs);$i++){
+            $element = Element::create($faqs[$i]->title)
+                ->subtitle(substr($faqs[$i]->body,0,30).'...')
+                ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
+                ->addButton(ElementButton::create('visit')->url('http://developers.tmcg.co.ug'))
+                ->addButton(ElementButton::create('tell me more')
+                    ->payload('faq__'.$faqs[$i]->id)->type('postback'));
+            array_push($elements, $element);
+        }
+        return $elements;
     }
 
     public function showFaqDetails($this_faq){
