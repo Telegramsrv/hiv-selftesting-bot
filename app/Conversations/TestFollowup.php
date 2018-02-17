@@ -79,10 +79,10 @@ class TestFollowup extends Conversation
                 $selectedValue = $answer->getValue();
                 $selectedText = $answer->getText();
                 if ($selectedValue == 'YES_FIRST_USER'){
-                    $this->fb_user->first_user = 1;
+                    $this->fb_user->first_timer = 1;
                     $this->fb_user->save();
                 }elseif($selectedValue == 'NO_FIRST_USER'){
-                    $this->fb_user->first_user = 0;
+                    $this->fb_user->first_timer = 0;
                     $this->fb_user->save();
                 }else{
                     $this->startYesTest();

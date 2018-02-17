@@ -60,7 +60,7 @@ return [
             ],
             [
                 'locale' => 'en_US',
-                'text' => 'An HIV Self testing Chatbot that provides frequently asked question, where to buy test kits, 
+                'text' => 'An HIV Self testing Chatbot that provides FAQs, where to buy test kits, 
                 How to use the test kits, and how to contact a counselor.',
             ],
         ],
@@ -90,15 +90,21 @@ return [
                     'payload' => 'instructions_2',
                 ],
                 [
-                    'title' => 'Find Locations',
-                    'type' => 'postback',
-                    'payload' => 'locations_3',
-                ],
-                [
-                    'title' => 'Contact a counselor',
-                    'type' => 'postback',
-                    'payload' => 'counselors_4',
-                ],
+                    'title' => 'More',
+                    'type' => 'nested',
+                    'call_to_actions' => [
+                        [
+                            'title' => 'Find Locations',
+                            'type' => 'postback',
+                            'payload' => 'locations_3',
+                        ],
+                        [
+                            'title' => 'Contact a counselor',
+                            'type' => 'postback',
+                            'payload' => 'counselors_4',
+                        ],
+                    ],
+                ]
             ],
         ],
     ],
