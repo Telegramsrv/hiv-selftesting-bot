@@ -3,6 +3,7 @@
 namespace App\Conversations;
 
 use App\Faq;
+use App\FaqAction;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
@@ -72,6 +73,10 @@ class ShowFaqs extends Conversation
                 $this->say($faq->title);
                 $this->say($faq->body);
             }
+
+            if ($faq->actions != null){
+                $this->sendFaqActions($faq->actions);
+            }
         }else{
             $this->ask('Please enter a correct number', function(Answer $answer) {
                 // Save result
@@ -80,6 +85,34 @@ class ShowFaqs extends Conversation
 
             });
         }
+    }
+
+    public function sendFaqActions($actions){
+        $buttons = array();
+        if (stristr($actions,',')){
+            $all_actions = explode(',',$actions);
+            foreach ($all_actions as $action){
+                $action = FaqAction::find((int)$action);
+                array_push($buttons,Button::create($action->title)->value($action->payload));
+            }
+        }else{
+            $action = FaqAction::find((int)$actions);
+            array_push($buttons,Button::create($action->title)->value($action->payload));
+        }
+
+        $question = Question::create('Where to go next')
+            ->fallback('Unable to post next')
+            ->callbackId('after_faq')
+            ->addButtons($buttons);
+
+        $this->ask($question, function (Answer $answer) {
+            // Detect if button was clicked:
+            if ($answer->isInteractiveMessageReply()) {
+                $selectedValue = $answer->getValue();
+                $selectedText = $answer->getText();
+                $this->bot->reply($selectedText);
+            }
+        });
     }
 
     /**

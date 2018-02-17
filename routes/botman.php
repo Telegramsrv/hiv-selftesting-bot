@@ -46,8 +46,9 @@ $botman->hears('counselors_4',function ($bot){
 });
 
 //single faq payload details
-$botman->hear('.*(faq__|faq___).*',function ($bot){
-    $bot->reply($bot->getMessage());
+$botman->hears('faq__{id}',function ($bot,$id){
+    $faq_details = new ShowFaqs($bot);
+    $faq_details->showFaqDetails($id);
 });
 
 
