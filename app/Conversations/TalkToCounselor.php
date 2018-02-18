@@ -3,7 +3,9 @@
 namespace App\Conversations;
 
 use App\Http\Controllers\FlowRunsController;
+use App\RapidproServer;
 use BotMan\BotMan\BotMan;
+use DateTime;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -41,5 +43,31 @@ class TalkToCounselor extends Conversation
     public function run()
     {
         $this->sendContact();
+    }
+
+    public static function sendConversationRapidpro()
+    {
+        $url = "https://hiwa.tmcg.co.ug/c/ex/212eeb3d-f556-4045-a845-54eb344ec7d5/receive";
+        $message = "hI THIS IS A TEST";
+        $userPsid = "";
+//        $serverDetails = RapidproServer::where("Status", 1)->first();
+        $date = date('Y-m-d H:i:s');
+        $json = "{
+                    'sender': '',
+                    'text': $message,
+                    'date':$date + '.180Z'
+                  }";
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: 	 application/json']);
+        curl_exec($ch);
+        curl_close($ch);
+
+
+
+
     }
 }
