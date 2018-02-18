@@ -34,4 +34,3 @@ Route::get('test-cronjob',function (){
         }
     }
 });
-Route::get('dateformat', function (){TalkToCounselor::sendConversationRapidpro();});

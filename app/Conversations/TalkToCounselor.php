@@ -33,7 +33,8 @@ class TalkToCounselor extends Conversation
             $qn->psid = $user->getId();
             $qn->body = $this->quest;
             $qn->save();
-            $this->say('Your question has been received. You will get a reply seen');
+            $this->sendConversationRapidpro($user->getId(),$answer->getText());
+            $this->say('Your question has been received. You will get a reply soon');
         });
     }
 
@@ -45,29 +46,20 @@ class TalkToCounselor extends Conversation
         $this->sendContact();
     }
 
-    public static function sendConversationRapidpro()
+    public function sendConversationRapidpro($userPsid, $message )
     {
-        $url = "https://hiwa.tmcg.co.ug/c/ex/212eeb3d-f556-4045-a845-54eb344ec7d5/receive";
-        $message = "hI THIS IS A TEST";
-        $userPsid = "";
-//        $serverDetails = RapidproServer::where("Status", 1)->first();
-        $date = date('Y-m-d H:i:s');
-        $json = "{
-                    'sender': '',
-                    'text': $message,
-                    'date':$date + '.180Z'
-                  }";
 
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: 	 application/json']);
-        curl_exec($ch);
-        curl_close($ch);
-
-
-
+        $serverDetails = RapidproServer::where("Status", 1)->first();
+        $date = explode("+",date("c"));
+        $data = array("from"=> $userPsid, "text"=> $message, "date"=> $date[0].'.034');
+        $options = array(
+                'http' => array(
+                    'header'  => "Content-type: application/x-www-form-urlencoded\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data)
+                        ));
+        $context  = stream_context_create($options);
+        $result = file_get_contents($serverDetails->Url, false, $context);
 
     }
 }
