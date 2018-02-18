@@ -24,7 +24,7 @@ Route::get('location/{lat}/{lng}', 'LocationsController@show');
 
 Route::match(['get', 'post'], '/botman', 'BotManController@handle');
 Route::get('/botman/tinker', 'BotManController@tinker');
-Route::get('test-cronjob',function (){
+/*Route::get('test-cronjob',function (){
     $unfollowed_users = DB::select('SELECT * FROM fb_users WHERE DATEDIFF(NOW(),created_at)<10');
     if (count($unfollowed_users)>0){
         $botman = resolve('botman');
@@ -33,4 +33,4 @@ Route::get('test-cronjob',function (){
             $botman->startConversation(new TestFollowup($botman), $u_user->user_id, FacebookDriver::class);
         }
     }
-});
+});*/
