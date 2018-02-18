@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Faq extends Model
+class RapidproServer extends Model
 {
     //Table Name
-    protected $table = 'faqs';
+    protected $table = 'rapidpro_servers';
     //Primary Key
     public $primaryKey = 'id';
     //Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 }

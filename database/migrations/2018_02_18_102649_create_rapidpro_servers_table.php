@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFlowRunsTable extends Migration
+class CreateRapidproServersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateFlowRunsTable extends Migration
      */
     public function up()
     {
-        Schema::create('flow_runs', function (Blueprint $table) {
+        Schema::create('rapidpro_servers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('psid',200);
-            $table->integer('flow_id')->nullable()->unsigned();
+            $table->string('Name',100)->nullable();
+            $table->string('Host',100)->nullable();
+            $table->string('Url',200)->nullable();
+            $table->boolean('Status')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateFlowRunsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('flow_runs');
+        Schema::dropIfExists('rapidpro_servers');
     }
 }

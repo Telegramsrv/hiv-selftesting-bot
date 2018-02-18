@@ -3,7 +3,9 @@
 namespace App\Conversations;
 
 use App\Http\Controllers\FlowRunsController;
+use App\RapidproServer;
 use BotMan\BotMan\BotMan;
+use DateTime;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -31,7 +33,8 @@ class TalkToCounselor extends Conversation
             $qn->psid = $user->getId();
             $qn->body = $this->quest;
             $qn->save();
-            $this->say('Your question has been received. You will get a reply seen');
+            $this->sendConversationRapidpro($user->getId(),$answer->getText());
+            $this->say('Your question has been received. You will get a reply soon');
         });
     }
 
@@ -41,5 +44,22 @@ class TalkToCounselor extends Conversation
     public function run()
     {
         $this->sendContact();
+    }
+
+    public function sendConversationRapidpro($userPsid, $message )
+    {
+
+        $serverDetails = RapidproServer::where("Status", 1)->first();
+        $date = explode("+",date("c"));
+        $data = array("from"=> $userPsid, "text"=> $message, "date"=> $date[0].'.034');
+        $options = array(
+                'http' => array(
+                    'header'  => "Content-type: application/x-www-form-urlencoded\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data)
+                        ));
+        $context  = stream_context_create($options);
+        $result = file_get_contents($serverDetails->Url, false, $context);
+
     }
 }

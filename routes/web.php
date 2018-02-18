@@ -11,6 +11,7 @@
 |
 */
 
+use App\Conversations\TalkToCounselor;
 use App\Conversations\TestFollowup;
 use BotMan\Drivers\Facebook\FacebookDriver;
 use Illuminate\Support\Facades\DB;
