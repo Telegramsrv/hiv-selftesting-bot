@@ -35,7 +35,7 @@ class ShowInstructions extends Conversation
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 $this->say('Here is a short video to illustrate how you can use the HIV Self Test Kit.');
-                if ($answer->getValue() === 'Oral') {
+                if ($answer->getValue() == 'Oral') {
                     FlowRunsController::saveRun($this->bot,6);
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/oral-kit-en.mp4',[
                         'custom_payload' => true,
@@ -43,15 +43,15 @@ class ShowInstructions extends Conversation
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     if (file_exists('videos/oral-kit-en.mp4')){
                         $this->bot->reply($message);
-                        $this->bot->typesAndWaits(10);
+                        $this->bot->typesAndWaits(5);
                     }else{
                         $this->say('Oral Test Video Loading...');
                     }
 
-                    $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
                     $this->bot->typesAndWaits(2);
                     $this->bot->reply('remember to type menu to return to the main menu');
-                } elseif($answer->getValue() === 'Blood') {
+                } elseif($answer->getValue() == 'Blood') {
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/blood-kit-en.mp4',[
                         'custom_payload' => true,
                     ]);
@@ -64,7 +64,7 @@ class ShowInstructions extends Conversation
                         $this->say('Blood Test Video Loading...');
                     }
 
-                    $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
                     $this->bot->typesAndWaits(2);
                     $this->bot->reply('remember to type menu to return to the main menu');
                 }else{
