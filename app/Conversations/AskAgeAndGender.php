@@ -36,7 +36,8 @@ class AskAgeAndGender extends Conversation
             $this->ask('Please enter your age eg 24', function(Answer $answer) {
                 // Save result
                 $this->age =  $answer->getText();
-                if ($this->age < 10){
+                if ($this->age < 10 || !is_numeric($this->age)){
+                    $this->say('This age is invalid or below the required value!');
                     $this->askAge();
                 }else{
                     $this->askGender();
