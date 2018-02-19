@@ -28,8 +28,7 @@ class NewUserController extends Controller
             }
         }else{
             $this->saveNewUser($user);
-            $bot->reply('Hello, Welcome to the HIV self testing assistant. Here, you will find test guides, 
-            ask questions, get answers, and speak to a health specialist if need arises. Lets proceed.');
+            $bot->reply('Hello, Welcome to the HIV self testing assistant. Here, you will find test guides, ask questions, get answers, and speak to a health specialist if need arises. Lets proceed.');
             $bot->startConversation(new AskAgeAndGender($bot));
             FlowRunsController::saveRun($bot,1);
             //return true;
