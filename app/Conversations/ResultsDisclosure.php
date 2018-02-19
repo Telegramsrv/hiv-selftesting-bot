@@ -33,7 +33,7 @@ class ResultsDisclosure extends Conversation
         FlowRunsController::saveRun($this->bot,13);
         $user = $this->bot->getUser();
         $this->fb_user = FbUser::where('user_id',$user->getId())->first();
-        $question = Question::create('How did the results come out from the Self Test Kit?')
+        $question = Question::create('It is important to know what to do after receiving your test result. In order to guide you, please select your test result')
             ->fallback('Unable to ask test results')
             ->callbackId('ask_test_results')
             ->addButtons([
