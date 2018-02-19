@@ -5,6 +5,8 @@ use App\Conversations\ShowInstructions;
 use App\Conversations\ShowLocations;
 use App\Conversations\ShowLocationsByCounty;
 use App\Conversations\TalkToCounselor;
+use App\Conversations\TestFollowup;
+use App\FbUser;
 use App\Http\Controllers\BotManController;
 use App\Http\Controllers\FlowRunsController;
 use BotMan\BotMan\BotMan;
@@ -14,6 +16,7 @@ use BotMan\BotMan\Messages\Attachments\Location;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
 use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\Drivers\Facebook\FacebookDriver;
 
 DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookImageDriver::class);
 DriverManager::loadDriver(\BotMan\Drivers\Facebook\FacebookLocationDriver::class);
@@ -117,6 +120,29 @@ $botman->receivesImages(function($bot, $images) {
     // Reply message object
     $bot->reply($message);
 });*/
+//bot testing
+$botman->hears('admin_test_my_followup', function ($bot) {
+    $user = $this->bot->getUser();
+    $psid = $user->getId();
+    $bot->reply('Now testing Followup for '.$user->getFirstName());
+    $bot->startConversation(new TestFollowup($bot), $psid, FacebookDriver::class);
+});
+$botman->hears('admin_reset_my_followup', function ($bot) {
+    $user = $this->bot->getUser();
+    $psid = $user->getId();
+    $fb_user = FbUser::where('user_id', $psid)->first();
+    $fb_user->followed = 0;
+    $fb_user->save();
+    $bot->reply('your followup status has been reset. please enter admin_test_my_followup to test the followup flow a gain');
+});
+$botman->hears('admin_reset_my_visit', function ($bot) {
+    $user = $this->bot->getUser();
+    $psid = $user->getId();
+    $fb_user = FbUser::where('user_id', $psid)->first();
+    $fb_user->delete();
+    $bot->reply('Your visit has been deleted. please delete your conversation and click get started again to restart the whole process');
+});
+//end bot testing
 
 $botman->fallback(function($bot) {
     $bot->reply('Sorry, I did not understand what you mean here! ... Please type menu to go to the main menu.');

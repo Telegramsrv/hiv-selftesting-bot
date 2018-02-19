@@ -69,7 +69,7 @@ class AskAgeAndGender extends Conversation
     }
 
     public function saveAgeAndGender(){
-            $user = $this->bot->getUser();
+        $user = $this->bot->getUser();
         // Access user psid (page scoped id)
         $psid = $user->getId();
         $fb_user = FbUser::where('user_id', $psid)->first();
