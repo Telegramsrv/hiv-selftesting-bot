@@ -38,8 +38,9 @@ class AskAgeAndGender extends Conversation
                 $this->age =  $answer->getText();
                 if ($this->age < 10){
                     $this->askAge();
+                }else{
+                    $this->askGender();
                 }
-                $this->askGender();
             });
         }
     }

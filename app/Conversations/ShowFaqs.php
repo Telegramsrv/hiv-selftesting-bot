@@ -42,7 +42,6 @@ class ShowFaqs extends Conversation
             $element = Element::create($faqs[$i]->title)
                 ->subtitle(substr($faqs[$i]->body,0,40).'...')
                 ->image('http://developers.tmcg.co.ug/images/positive.jpg')
-                ->addButton(ElementButton::create('visit')->url('http://developers.tmcg.co.ug'))
                 ->addButton(ElementButton::create('tell me more')
                     ->payload('faq__'.$faqs[$i]->id)->type('postback'));
             array_push($elements, $element);
