@@ -97,7 +97,7 @@ class AskAgeAndGender extends Conversation
             )
             ->addElement(
                 Element::create('Where to Buy a Self Test Kit')
-                    ->subtitle('Locations')
+                    ->subtitle('Locations & Pharmacies')
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View')
                         ->payload('locations_3')->type('postback')

@@ -26,6 +26,7 @@ $botman->hears('test', 'App\Http\Controllers\NewUserController@isNewUser');
 $botman->hears('st', 'App\Http\Controllers\NewUserController@isNewUser');
 
 $botman->hears('menu','App\Conversations\AskAgeAndGender@displayMainMenu');
+$botman->hears('help','App\Conversations\AskAgeAndGender@displayMainMenu');
 
 $botman->hears('stop', function($bot) {
     $bot->reply('stopped');
@@ -76,9 +77,9 @@ $botman->hears('choose_my_county', function ($bot) {
 
 
 $botman->hears('Hi', function ($bot) {
-    $bot->reply('Hello!');
+    $bot->reply('Hello! You can type menu to view the available options to choose from');
 });
-$botman->hears('Call me {name}', function ($bot,$name) {
+/*$botman->hears('Call me {name}', function ($bot,$name) {
     $bot->reply('Your name is: '.$name);
 });
 $botman->hears('I want ([0-9]+)', function ($bot, $number) {
@@ -115,17 +116,9 @@ $botman->receivesImages(function($bot, $images) {
 
     // Reply message object
     $bot->reply($message);
-});
+});*/
 
 $botman->fallback(function($bot) {
     $bot->reply('Sorry, I did not understand what you mean here! ... Please type menu to go to the main menu.');
 });
 
-
-$botman->hears('user', function ($bot) {
-    // Access user
-    $user = $bot->getUser();
-    // Access Information
-    $info = $user->getInfo();
-    $bot->reply($user->getFirstName());
-});

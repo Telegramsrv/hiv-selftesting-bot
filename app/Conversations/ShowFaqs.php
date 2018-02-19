@@ -37,7 +37,7 @@ class ShowFaqs extends Conversation
 
     public function makeTemplateElements(){
         $elements = array();
-        $faqs = Faq::all();
+        $faqs = Faq::orderBy('id','asc')->take(7)->get();
         for ($i=0;$i<count($faqs);$i++){
             $element = Element::create($faqs[$i]->title)
                 ->subtitle(substr($faqs[$i]->body,0,40).'...')
