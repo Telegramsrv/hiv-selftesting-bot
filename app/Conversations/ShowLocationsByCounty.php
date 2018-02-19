@@ -32,13 +32,13 @@ class ShowLocationsByCounty extends Conversation
     public function askCounty()
     {
         FlowRunsController::saveRun($this->bot,8);
-        $attachment = new Image('http://developers.tmcg.co.ug/images/positive.jpg', [
+        /*$attachment = new Image('http://developers.tmcg.co.ug/images/positive.jpg', [
             'custom_payload' => true,
         ]);
         $message = OutgoingMessage::create('Use the image below and reply with the name of your county')
-            ->withAttachment($attachment);
-        $this->say('Use the image below and reply with the name of your county');
-        $this->ask($message, function(Answer $answer) {
+            ->withAttachment($attachment);*/
+        //$this->say('Use the image below and reply with the name of your county');
+        $this->ask('Please enter the name of your county', function(Answer $answer) {
             // Save result
             $this->county = $answer->getText();
             //get pharmacies in county
