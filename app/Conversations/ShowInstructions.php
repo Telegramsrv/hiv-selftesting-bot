@@ -43,12 +43,13 @@ class ShowInstructions extends Conversation
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     if (file_exists('videos/oral-kit-en.mp4')){
                         $this->bot->reply($message);
+                        $this->bot->typesAndWaits(10);
                     }else{
                         $this->say('Oral Test Video Loading...');
                     }
 
-                    $this->bot->typesAndWaits(30);
                     $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->bot->typesAndWaits(2);
                     $this->bot->reply('remember to type menu to return to the main menu');
                 } elseif($answer->getValue() === 'Blood') {
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/blood-kit-en.mp4',[
@@ -58,12 +59,13 @@ class ShowInstructions extends Conversation
                     FlowRunsController::saveRun($this->bot,7);
                     if (file_exists('videos/blood-kit-en.mp4')){
                         $this->bot->reply($message);
+                        $this->bot->typesAndWaits(10);
                     }else{
                         $this->say('Blood Test Video Loading...');
                     }
 
-                    $this->bot->typesAndWaits(30);
                     $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->bot->typesAndWaits(2);
                     $this->bot->reply('remember to type menu to return to the main menu');
                 }else{
                     $this->askKitType();

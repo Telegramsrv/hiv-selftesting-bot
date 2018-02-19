@@ -46,8 +46,10 @@ class ShowLocationsByCounty extends Conversation
             if (count($pharmacies)>0 && $pharmacies != null){
                 $this->bot->reply('Here is a List of the nearest pharmacies where you can get an HIV self test kit in '.$this->county);
                 $this->sendLocationsList($pharmacies);
+                $this->bot->typesAndWaits(3);
+                $this->bot->reply('remember to always type menu to go back to the main menu.');
             }else{
-                $this->say($this->county.' County not Found!');
+                $this->say($this->county.' County not Found! Please check the spelling or send a nearby county.');
                 $this->askCounty();
             }
         });

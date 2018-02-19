@@ -103,6 +103,9 @@ class ShowLocations extends Conversation
                     ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[3]->lat.'/'.$pharmacies[3]->lon))
             )
         );
+
+        $this->bot->typesAndWaits(3);
+        $this->bot->reply('remember to always type menu to go back to the main menu.');
     }
     /**
      * Start the conversation

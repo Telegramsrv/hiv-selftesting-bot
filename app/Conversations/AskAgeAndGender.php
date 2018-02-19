@@ -93,7 +93,7 @@ class AskAgeAndGender extends Conversation
                         ->payload('faqs_1')->type('postback'))
             )
             ->addElement(
-                Element::create(' Where to Buy/Find an HIV Self Test kit')
+                Element::create('Where to Buy/Find an HIV Self Test kit')
                     ->subtitle('Pharmacies & Locations')
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View')
