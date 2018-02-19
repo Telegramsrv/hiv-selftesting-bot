@@ -122,13 +122,13 @@ $botman->receivesImages(function($bot, $images) {
 });*/
 //bot testing
 $botman->hears('admin_test_my_followup', function ($bot) {
-    $user = $this->bot->getUser();
+    $user = $bot->getUser();
     $psid = $user->getId();
     $bot->reply('Now testing Followup for '.$user->getFirstName());
-    $bot->startConversation(new TestFollowup($bot), $psid, FacebookDriver::class);
+    $bot->startConversation(new TestFollowup($bot));
 });
 $botman->hears('admin_reset_my_followup', function ($bot) {
-    $user = $this->bot->getUser();
+    $user = $bot->getUser();
     $psid = $user->getId();
     $fb_user = FbUser::where('user_id', $psid)->first();
     $fb_user->followed = 0;
@@ -136,7 +136,7 @@ $botman->hears('admin_reset_my_followup', function ($bot) {
     $bot->reply('your followup status has been reset. please enter admin_test_my_followup to test the followup flow a gain');
 });
 $botman->hears('admin_reset_my_visit', function ($bot) {
-    $user = $this->bot->getUser();
+    $user = $bot->getUser();
     $psid = $user->getId();
     $fb_user = FbUser::where('user_id', $psid)->first();
     $fb_user->delete();
