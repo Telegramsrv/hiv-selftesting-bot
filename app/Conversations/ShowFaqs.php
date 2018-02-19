@@ -41,7 +41,7 @@ class ShowFaqs extends Conversation
         for ($i=0;$i<count($faqs);$i++){
             $element = Element::create($faqs[$i]->title)
                 ->subtitle(substr($faqs[$i]->body,0,40).'...')
-                ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
+                ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                 ->addButton(ElementButton::create('visit')->url('http://developers.tmcg.co.ug'))
                 ->addButton(ElementButton::create('tell me more')
                     ->payload('faq__'.$faqs[$i]->id)->type('postback'));
@@ -49,8 +49,8 @@ class ShowFaqs extends Conversation
         }
         $element = Element::create("Can't find what you're looking for?")
             ->subtitle('Here are more options you can try')
-            ->image('http://developers.tmcg.co.ug/images/test-kit-types.png')
-            ->addButton(ElementButton::create('visit website')->url('http://besure.co.ke'))
+            ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+            ->addButton(ElementButton::create('visit website')->url('http://beselfsure.org'))
             ->addButton(ElementButton::create('Ask Question')
                 ->payload('ask_question')->type('postback'));
         array_push($elements, $element);
@@ -66,9 +66,11 @@ class ShowFaqs extends Conversation
                     ->withAttachment($attachment);
                 $this->say($faq->title);
                 $this->bot->reply($message);
+                $this->bot->typesAndWaits(2);
                 $this->say($faq->body);
             }else{
                 $this->say($faq->title);
+                $this->bot->typesAndWaits(2);
                 $this->say($faq->body);
             }
 
@@ -76,7 +78,7 @@ class ShowFaqs extends Conversation
                 $this->sendFaqActions($faq->actions);
             }
         }else{
-            $this->ask('Please enter a correct number', function(Answer $answer) {
+            $this->ask('Please Select a question', function(Answer $answer) {
                 // Save result
                 $this_faq =  $answer->getText();
                 $this->showFaqDetails($this_faq);
@@ -108,7 +110,10 @@ class ShowFaqs extends Conversation
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
                 $selectedText = $answer->getText();
-                $this->bot->reply($selectedText);
+                if ($selectedValue == 'go_to_main_menu'){
+                    $askAgeGender = new AskAgeAndGender($this->bot);
+                    $askAgeGender->displayMainMenu();
+                }
             }else{
                 $this->sendFaqActions($actions);
             }

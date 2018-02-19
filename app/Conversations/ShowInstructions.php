@@ -23,32 +23,48 @@ class ShowInstructions extends Conversation
      */
     public function askKitType(){
         FlowRunsController::saveRun($this->bot,3);
+        $this->bot->typesAndWaits(2);
         $question = Question::create("Please select the type of Kit you are interested in")
             ->fallback('Unable to ask kit type question')
             ->callbackId('ask_kit_type')
             ->addButtons([
-                Button::create('Oral Kit (Oraquick) ')->value('Oral'),
+                Button::create('Oral (Mouth) Kit')->value('Oral'),
                 Button::create('Blood Kit (Insti)')->value('Blood'),
             ]);
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
+                $this->say('Here is a short video to illustrate how you can use the HIV Self Test Kit.');
                 if ($answer->getValue() === 'Oral') {
                     FlowRunsController::saveRun($this->bot,6);
-                    $attachment = new Video('https://developers.tmcg.co.ug/videos/oral-kit.mp4',[
+                    $attachment = new Video('https://developers.tmcg.co.ug/videos/oral-kit-en.mp4',[
                         'custom_payload' => true,
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
-                    //$this->bot->reply($message);
-                    $this->say('Oral Test Video');
-                    $this->bot->typesAndWaits(3);
-                    $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
+                    if (file_exists('videos/oral-kit-en.mp4')){
+                        $this->bot->reply($message);
+                    }else{
+                        $this->say('Oral Test Video Loading...');
+                    }
 
+                    $this->bot->typesAndWaits(30);
+                    $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->bot->reply('remember to type menu to return to the main menu');
                 } elseif($answer->getValue() === 'Blood') {
+                    $attachment = new Video('https://developers.tmcg.co.ug/videos/blood-kit-en.mp4',[
+                        'custom_payload' => true,
+                    ]);
+                    $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     FlowRunsController::saveRun($this->bot,7);
-                    $this->say('Blood Test Video');
-                    $this->bot->typesAndWaits(3);
-                    $this->bot->reply('You can call 1190 toll free or visit www.besure.co.ke fore more information on HIV self testing.');
+                    if (file_exists('videos/blood-kit-en.mp4')){
+                        $this->bot->reply($message);
+                    }else{
+                        $this->say('Blood Test Video Loading...');
+                    }
+
+                    $this->bot->typesAndWaits(30);
+                    $this->bot->reply('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                    $this->bot->reply('remember to type menu to return to the main menu');
                 }else{
                     $this->askKitType();
                 }

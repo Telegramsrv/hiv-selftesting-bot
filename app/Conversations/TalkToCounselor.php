@@ -25,16 +25,41 @@ class TalkToCounselor extends Conversation
     public function sendContact()
     {
         FlowRunsController::saveRun($this->bot,5);
-        $this->bot->reply('Contact 1190 toll free or visit www.besure.co.ke for more information');
-        $this->ask('You can ask a question and a counselor will send you a reply. Ask Question', function(Answer $answer) {
-            $this->quest = $answer->getText();
-            $qn = new \App\Question;
-            $user = $this->bot->getUser();
-            $qn->psid = $user->getId();
-            $qn->body = $this->quest;
-            $qn->save();
-            $this->sendConversationRapidpro($user->getId(),$answer->getText());
-            $this->say('Your question has been received. You will get a reply soon');
+        $this->bot->reply('If you need to talk to a counselor regarding HIV self testing , you can call the toll free line - 1190');
+        $this->say('You can also send a message below and you will get a reply from a counselor.');
+        $question = Question::create('You can choose one of these actions')
+            ->fallback('Unable to ask whether ask question')
+            ->callbackId('should_ask_question')
+            ->addButtons([
+                Button::create('Ask Question')->value('ask_qn'),
+                Button::create('Go To Main Menu')->value('main_menu'),
+            ]);
+
+        $this->ask($question, function (Answer $answer) {
+            // Detect if button was clicked:
+            if ($answer->isInteractiveMessageReply()) {
+                $selectedValue = $answer->getValue();
+                $selectedText = $answer->getText();
+                if ($selectedValue == 'ask_qn'){
+                    $this->ask('Please go ahead and ask your question.', function(Answer $answer) {
+                        $this->quest = $answer->getText();
+                        $qn = new \App\Question;
+                        $user = $this->bot->getUser();
+                        $qn->psid = $user->getId();
+                        $qn->body = $this->quest;
+                        $qn->save();
+                        $this->sendConversationRapidpro($user->getId(),$answer->getText());
+                        $this->say('Your question has been received. You will get a reply soon');
+                    });
+                }elseif($selectedValue == 'main_menu'){
+                    $askAgeGender = new AskAgeAndGender($this->bot);
+                    $askAgeGender->displayMainMenu();
+                }else{
+                    $this->sendContact();
+                }
+            }else{
+                $this->sendContact();
+            }
         });
     }
 

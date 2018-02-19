@@ -50,17 +50,17 @@ class ResultsDisclosure extends Conversation
                 if ($selectedValue == 'POSITIVE'){
                     $this->fb_user->results = 'Positive';
                     $this->fb_user->save();
-                    $this->say('What to do with Positive Results .....');
+                    $this->say('Thank you for using the self test. It is important that you do a confirmatory test at a referral health facility. You can find referral health facility locations by calling 1190.');
                     $this->bot->startConversation(new TalkToCounselor($this->bot));
-                    $this->say('What to do with Positive Results .....');
                 }elseif($selectedValue == 'NEGATIVE'){
                     $this->fb_user->results = 'Negative';
                     $this->fb_user->save();
-                    $this->bot->startConversation(new TalkToCounselor($this->bot));
+                    $this->say('Please call our counselors on the toll free line,1190 for more information on how to protect yourself and remain Negative.');
+                    //$this->bot->startConversation(new TalkToCounselor($this->bot));
                 }elseif($selectedValue == 'UNCLEAR'){
                     $this->fb_user->results = 'Unclear';
                     $this->fb_user->save();
-                    $this->say('What to do with Positive Results .....');
+                    $this->say('Thank you for using the self test. It is important that you do a confirmatory test at a referral health facility. You can find referral health facility locations by calling 1190.');
                     $this->bot->startConversation(new TalkToCounselor($this->bot));
                 }else{
                     $this->disclose();

@@ -32,9 +32,13 @@ class AskAgeAndGender extends Conversation
         if (FbUser::where('user_id',$this->bot->getUser()->getId())->whereNotNull('age')->first() != null){
             $this->displayMainMenu();
         }else{
+            $this->bot->typesAndWaits(2);
             $this->ask('Please enter your age eg 24', function(Answer $answer) {
                 // Save result
                 $this->age =  $answer->getText();
+                if ($this->age < 10){
+                    $this->askAge();
+                }
                 $this->askGender();
             });
         }
@@ -45,11 +49,11 @@ class AskAgeAndGender extends Conversation
             ->fallback('Unable to ask for gender')
             ->callbackId('ask_gender')
             ->addButtons([
-                Button::create('Male')->value('M'),
-                Button::create('Female')->value('F'),
-                Button::create('Other')->value('O'),
+                Button::create('Male')->value('Male'),
+                Button::create('Female')->value('Female'),
+                Button::create('Other')->value('Other'),
             ]);
-
+        $this->bot->typesAndWaits(2);
         $this->ask($question, function (Answer $answer) {
             // Detect if button was clicked:
             if ($answer->isInteractiveMessageReply()) {
@@ -76,31 +80,31 @@ class AskAgeAndGender extends Conversation
 
     public function displayMainMenu(){
         $this->bot->typesAndWaits(2);
-        $this->say('Please choose from the menu below');
+        $this->say(' Please choose what kind of information you need from the menu below.');
         $this->bot->typesAndWaits(2);
         $this->bot->reply(ListTemplate::create()
             ->useCompactView()
             ->addElement(
-                Element::create('More information on HIV Self Testing')
-                    ->subtitle('FAQs and More')
+                Element::create('General Information on HIV Self Testing')
+                    ->subtitle('Frequently Asked Questions (FAQs)')
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View')
                         ->payload('faqs_1')->type('postback'))
             )
             ->addElement(
-                Element::create('How to use the Self Test Kit')
-                    ->subtitle('Instructions')
-                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
-                    ->addButton(ElementButton::create('View')
-                        ->payload('instructions_2')->type('postback')
-                    )
-            )
-            ->addElement(
-                Element::create('Where to Buy a Self Test Kit')
-                    ->subtitle('Locations & Pharmacies')
+                Element::create(' Where to Buy/Find an HIV Self Test kit')
+                    ->subtitle('Pharmacies & Locations')
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View')
                         ->payload('locations_3')->type('postback')
+                    )
+            )
+            ->addElement(
+                Element::create('How to use the HIV Self Test Kit')
+                    ->subtitle('Instructions & Videos')
+                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+                    ->addButton(ElementButton::create('View')
+                        ->payload('instructions_2')->type('postback')
                     )
             )
             ->addElement(

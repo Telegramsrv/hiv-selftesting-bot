@@ -43,9 +43,9 @@ $botman->hears('instructions_2',function ($bot){
 });
 $botman->hears('locations_3',function ($bot){
     FlowRunsController::saveRun($bot,4);
-    $bot->reply(ButtonTemplate::create('We shall use your location to find Pharmacies closest to you where you can buy a self test kit')
+    $bot->reply(ButtonTemplate::create('In order to give you relevant information, we shall use either your current location or any other location you provide to suggest the closest pharmacies or selling points.')
         ->addButton(ElementButton::create('Use my location')->type('postback')->payload('use_my_location'))
-        ->addButton(ElementButton::create('Choose my county')->type('postback')->payload('choose_my_county'))
+        ->addButton(ElementButton::create('Enter my county')->type('postback')->payload('choose_my_county'))
     );
     //$bot->typesAndWaits(2);
 });

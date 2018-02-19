@@ -33,7 +33,7 @@ class TestFollowup extends Conversation
         FlowRunsController::saveRun($this->bot,10);
         $user = $this->bot->getUser();
         $this->fb_user = FbUser::where('user_id',$user->getId())->first();
-        $question = Question::create('Have You Used a Self Test Kit?')
+        $question = Question::create('Have you been able to get and use an HIV self test kit since our last interaction?')
             ->fallback('Unable to ask whether used kit')
             ->callbackId('have_used_kit')
             ->addButtons([
