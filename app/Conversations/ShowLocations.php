@@ -91,6 +91,11 @@ class ShowLocations extends Conversation
                     ->subtitle($pharmacies[2]->address.' - '.$pharmacies[2]->county)
                     ->image('http://developers.tmcg.co.ug/images/positive.jpg')
                     ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[2]->lat.'/'.$pharmacies[2]->lon))
+            )->addElement(
+                Element::create($pharmacies[3]->name)
+                    ->subtitle($pharmacies[3]->address.' - '.$pharmacies[3]->county)
+                    ->image('http://developers.tmcg.co.ug/images/positive.jpg')
+                    ->addButton(ElementButton::create('View Map')->url('http://developers.tmcg.co.ug/location/'.$pharmacies[3]->lat.'/'.$pharmacies[3]->lon))
             )
         );
     }
