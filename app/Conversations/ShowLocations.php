@@ -45,7 +45,7 @@ class ShowLocations extends Conversation
                 $distances[$pharma->id] = DBLocation::distance($pharma->lat, $pharma->lon, $this->lat,$this->lon);
             }
             //sort asc
-            $distances = arsort($distances);
+            arsort($distances);
             //get first 3 locations
             $pharmacies = array();
             $i=0;
