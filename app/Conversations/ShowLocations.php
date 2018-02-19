@@ -51,7 +51,12 @@ class ShowLocations extends Conversation
             $i=0;
             foreach ($distances as $index => $distance){
                 $pharma = Pharmacy::find($index);
-                array_push($pharmacies, $pharma);
+                if ($pharma != null){
+                    array_push($pharmacies, $pharma);
+                }else{
+                    continue;
+                }
+
                 $i++;
                 if ($i>3){
                     break;
