@@ -50,7 +50,7 @@ class ShowInstructions extends Conversation
 
                     $this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
                     $this->bot->typesAndWaits(2);
-                    $this->bot->reply('remember to type menu to return to the main menu');
+                    $this->say('remember to type menu to return to the main menu');
                 } elseif($answer->getValue() == 'Blood') {
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/blood-kit-en.mp4',[
                         'custom_payload' => true,
@@ -66,7 +66,7 @@ class ShowInstructions extends Conversation
 
                     $this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
                     $this->bot->typesAndWaits(2);
-                    $this->bot->reply('remember to type menu to return to the main menu');
+                    $this->say('remember to type menu to return to the main menu');
                 }else{
                     $this->askKitType();
                 }
