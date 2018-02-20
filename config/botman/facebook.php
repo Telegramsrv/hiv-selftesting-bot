@@ -56,11 +56,11 @@ return [
         'greeting' => [
             [
                 'locale' => 'default',
-                'text' => 'An HIV Self-Testing (HIVST) assistant that guides you on here to find Self Test kits,how to test, ask questions and get answers from health specialists.',
+                'text' => 'An HIV Self-Testing (HIVST) assistant that guides you on where to find Self Test kits,how to test, ask questions and get answers from health specialists.',
             ],
             [
                 'locale' => 'en_US',
-                'text' => 'An HIV Self-Testing (HIVST) assistant that guides you on here to find Self Test kits,how to test, ask questions and get answers from health specialists.',
+                'text' => 'An HIV Self-Testing (HIVST) assistant that guides you on where to find Self Test kits,how to test, ask questions and get answers from health specialists.',
             ],
         ],
     ],
