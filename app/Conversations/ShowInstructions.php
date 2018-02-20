@@ -42,7 +42,7 @@ class ShowInstructions extends Conversation
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     if (file_exists('videos/oral-kit-en.mp4')){
-                        $this->bot->reply($message);
+                        $this->say($message);
                         $this->bot->typesAndWaits(5);
                     }else{
                         $this->say('Oral Test Video Loading...');
@@ -59,7 +59,7 @@ class ShowInstructions extends Conversation
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     FlowRunsController::saveRun($this->bot,7);
                     if (file_exists('videos/blood-kit-en.mp4')){
-                        $this->bot->reply($message);
+                        $this->say($message);
                         $this->bot->typesAndWaits(10);
                     }else{
                         $this->say('Blood Test Video Loading...');
