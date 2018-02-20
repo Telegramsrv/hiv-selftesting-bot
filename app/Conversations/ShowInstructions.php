@@ -61,9 +61,8 @@ class ShowInstructions extends Conversation
                 }else{
                     $this->askKitType();
                 }
-                /*$this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
-                $this->bot->typesAndWaits(2);
-                $this->say('remember to type menu to return to the main menu');*/
+                $this->say('We Hope the video has been helpful. However, if you need more information on HIV Self testing, you can call 1190 toll free or visit www.beselfsure.org for more information on HIV self testing.');
+                $this->say('remember to type menu to return to the main menu');
             }
         });
     }
