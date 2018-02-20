@@ -34,11 +34,11 @@ class ShowInstructions extends Conversation
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
-                $this->say('Here is a short video to illustrate how you can use the HIV Self Test Kit.');
                 if ($answer->getValue() == 'Oral') {
                     FlowRunsController::saveRun($this->bot,6);
+                    $this->say('Here is a short video to illustrate how you can use the Oral (Mouth) HIV Self Test Kit.');
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/oral-kit-en.mp4',[
-                        'custom_payload' => true,
+                        'custom_payload' => false,
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     if (file_exists('videos/oral-kit-en.mp4')){
@@ -52,8 +52,9 @@ class ShowInstructions extends Conversation
                     $this->bot->typesAndWaits(2);
                     $this->say('remember to type menu to return to the main menu');
                 } elseif($answer->getValue() == 'Blood') {
+                    $this->say('Here is a short video to illustrate how you can use the Blood HIV Self Test Kit.');
                     $attachment = new Video('https://developers.tmcg.co.ug/videos/blood-kit-en.mp4',[
-                        'custom_payload' => true,
+                        'custom_payload' => false,
                     ]);
                     $message = OutgoingMessage::create('Video')->withAttachment($attachment);
                     FlowRunsController::saveRun($this->bot,7);
